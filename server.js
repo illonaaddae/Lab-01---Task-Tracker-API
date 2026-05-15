@@ -3,6 +3,8 @@ require('dotenv').config();
 const express = require('express');
 
 const logger = require('./middleware/logger');
+const notFound = require('./middleware/notFound');
+const errorHandler = require('./middleware/errorHandler');
 const taskRoutes = require('./routes/taskRoutes');
 
 const app = express();
@@ -15,6 +17,9 @@ app.get('/health', (req, res) => {
 });
 
 app.use('/api/tasks', taskRoutes);
+
+app.use(notFound);
+app.use(errorHandler);
 
 const port = process.env.PORT || 3000;
 
